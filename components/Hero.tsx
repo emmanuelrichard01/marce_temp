@@ -6,15 +6,17 @@ import Link from "next/link";
 import { Transition } from "@headlessui/react";
 
 export default function Hero() {
-    const INTERVAL_LENGTH = 5000;
+    const INTERVAL_LENGTH = 4000;
     const AUTOPLAY = true;
 
     const items = [
+        { src: "/images/shoe2.png", alt: "Shoe Mockup" },
         { src: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png", alt: "Phone Mockup" },
         { src: "/images/macbook.png", alt: "MacBook Mockup" },
         { src: "/images/watch1.png", alt: "Watch Mockup" },
         { src: "/images/shoe1.png", alt: "Shoe Mockup" },
         { src: "/images/perfume.png", alt: "Perfume Mockup" },
+        { src: "/images/watch2.png", alt: "Watch Mockup" },
         { src: "/images/shirt1.png", alt: "Shirt Mockup" }
     ];
 
@@ -31,7 +33,7 @@ export default function Hero() {
 
     return (
         <section className="bg-white dark:bg-gray-900 lg:px-20">
-            <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+            <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:pb-16 lg:grid-cols-12">
                 <div className="mr-auto place-self-center lg:col-span-7">
                     <span className="mb-8 text-xs font-bold tracking-widest text-gray-700 uppercase">
                         Modern C2C Platform
