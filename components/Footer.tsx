@@ -1,4 +1,7 @@
-import React from 'react'
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+
 
 const Footer = () => {
     return (
@@ -7,9 +10,11 @@ const Footer = () => {
                 <h2 id="footer-heading" className="sr-only">Footer</h2>
                 <div className="px-5 py-12 mx-auto max-w-7xl lg:py-16 md:px-12 lg:px-20">
                     <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-                        <div className="space-y-8 xl:col-span-1">
-                            <a className="text-lg font-bold tracking-tighter text-gray-800 transition duration-500 ease-in-out transform tracking-relaxed lg:pr-8" href="/groups/footer/"> MARCE </a>
-                            <p className="w-1/2 mt-2 text-sm text-gray-500">Wicked templates for wicked dev's</p>
+                        <div className="space-y-2 xl:col-span-1">
+                            <Link className="text-lg font-bold tracking-tighter text-gray-800 transition duration-500 ease-in-out transform tracking-relaxed lg:pr-8" href="/">
+                                <Image src="/logo.png" alt='marcelogo' width={180} height={40} />
+                            </Link>
+                            <p className="w-1/2 mt-1 font-bold text-sm text-gray-500">Buy, Sell, Connect</p>
                         </div>
                         <div className="grid grid-cols-2 gap-8 mt-12 xl:mt-0 xl:col-span-2">
                             <div className="md:grid md:grid-cols-2 md:gap-8">
@@ -118,7 +123,7 @@ const Footer = () => {
                     <div className="mt-8 md:mt-0 md:order-1">
                         <span className="mt-2 text-sm font-light text-gray-500">
                             Copyright © 2024
-                            <a href="https://wickedlabs.dev" className="mx-2 text-wickedblue hover:text-gray-500" rel="noopener noreferrer">@MarceHQ</a>. Since 2024
+                            <a href="https://wickedlabs.dev" className="mx-2 text-wickedblue hover:text-gray-500" rel="noopener noreferrer">Marce LTD.</a>. Since 2024
                         </span>
                     </div>
                 </div>

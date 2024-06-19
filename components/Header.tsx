@@ -3,6 +3,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ShoppingCartIcon } from '@heroicons/react/24/outline'
 
@@ -15,10 +16,9 @@ const Header: React.FC = () => {
         <div className="w-full max-w-full bg-white sticky">
             <div className="bg-white flex flex-col max-w-screen-xl p-5 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
                 <div className="flex flex-row items-center justify-between lg:justify-start">
-                    <Link href="/">
-                        <span className="text-lg font-bold tracking-tighter text-gray-900 transition duration-500 ease-in-out transform tracking-relaxed lg:pr-8">
-                            MARCE
-                        </span>
+                    <Link href="/" className='mr-4'>
+                        <Image src="/logo.png" width={140} height={40} />
+
                     </Link>
                     <button
                         className="rounded-lg md:hidden focus:outline-none focus:shadow-outline"
@@ -44,7 +44,7 @@ const Header: React.FC = () => {
 
                 <nav
                     className={`${menuOpen ? 'flex' : 'hidden'
-                        } flex-col items-center flex-grow hidden pb-4 border-gray-800 md:pb-0 md:flex md:justify-end md:flex-row lg:border-l-2 lg:pl-2`}
+                        } flex-col items-center flex-grow hidden pb-4 border-gray-800 md:pb-0 md:flex md:justify-end md:flex-row lg:pl-2`}
                 >
                     <Link href="#">
                         <span className="px-4 py-2 mt-2 text-sm text-gray-500 md:mt-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">
@@ -125,21 +125,23 @@ const Header: React.FC = () => {
                     </div>
 
                     <div className="inline-flex items-center gap-3 list-none lg:ml-auto">
-                        <Link href="/sign-in">
+                        {/* <Link href="/sign-in">
                             <button className="items-center block px-6 py-2.5 text-sm font-medium text-center text-gray-900 transition duration-500 ease-in-out transform border-2 border-white shadow-md rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                                 Sign in
                             </button>
+                        </Link> */}
+                        <Link href="/sign-up">
+                            <button className="items-center block px-6 py-3 text-sm font-medium text-center text-white transition duration-500 ease-in-out transform bg-gray-700 rounded-xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                                Sign up
+                            </button>
                         </Link>
-                        <button className="items-center block px-6 py-3 text-sm font-medium text-center text-white transition duration-500 ease-in-out transform bg-gray-700 rounded-xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                            Sign up
-                        </button>
-                        <Avatar>
+                        {/* <Avatar>
                             <AvatarImage src="https://github.com/shadcn.png" />
                             <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
+                        </Avatar> */}
                     </div>
                     {/* Cart */}
-                    <div className="ml-4 flow-root lg:ml-6">
+                    {/* <div className="ml-4 flow-root lg:ml-6">
                         <a href="#" className="group -m-2 flex items-center p-2">
                             <ShoppingCartIcon
                                 className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
@@ -148,7 +150,7 @@ const Header: React.FC = () => {
                             <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
                             <span className="sr-only">items in cart, view bag</span>
                         </a>
-                    </div>
+                    </div> */}
                 </nav>
             </div>
         </div>

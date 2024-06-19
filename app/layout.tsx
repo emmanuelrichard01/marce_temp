@@ -7,10 +7,10 @@ import Footer from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Marce - C2C eCommerce Platform",
-  description: "Buy, Sell, Connect",
+  title: "Marce",
+  description: "C2C eCommerce Platform",
   icons: {
-    icon: '/marce/app/favicon.ico'
+    icon: '/app/favicon.ico'
   }
 };
 
