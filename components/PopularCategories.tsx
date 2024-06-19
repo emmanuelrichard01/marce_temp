@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import Slider from 'react-slick';
+import Slider, { CustomArrowProps } from 'react-slick';
 import { DevicePhoneMobileIcon, TvIcon, ShoppingBagIcon, ShoppingCartIcon, TruckIcon } from '@heroicons/react/24/outline';
 
 const categories = [
@@ -65,7 +65,7 @@ const PopularCategories: React.FC = () => {
     );
 };
 
-function SampleNextArrow(props) {
+function SampleNextArrow(props: CustomArrowProps) {
     const { className, style, onClick } = props;
     return (
         <div
@@ -76,7 +76,7 @@ function SampleNextArrow(props) {
     );
 }
 
-function SamplePrevArrow(props) {
+function SamplePrevArrow(props: CustomArrowProps) {
     const { className, style, onClick } = props;
     return (
         <div
