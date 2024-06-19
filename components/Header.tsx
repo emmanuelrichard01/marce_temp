@@ -17,7 +17,7 @@ const Header: React.FC = () => {
             <div className="bg-white flex flex-col max-w-screen-xl p-5 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
                 <div className="flex flex-row items-center justify-between lg:justify-start">
                     <Link href="/" className='mr-4'>
-                        <Image src="/logo.png" width={140} height={40} />
+                        <Image src="/logo.png" alt="logo" width={140} height={40} />
 
                     </Link>
                     <button
