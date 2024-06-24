@@ -11,6 +11,7 @@ import CallToAction from '../components/CallToAction';
 import SecurityAndTrust from '../components/SecurityAndTrust';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import SectionPromo1 from "@/components/SectionPromo1";
 
 
 export default function Home() {
@@ -21,7 +22,7 @@ export default function Home() {
       <PopularCategories />
       <FeaturedProducts />
       {/* <KeyFeatures /> */}
-      {/* <HowItWorks /> */}
+      <SectionPromo1 />
       <Testimonials />
       {/* <Benefits /> */}
       <CallToAction />

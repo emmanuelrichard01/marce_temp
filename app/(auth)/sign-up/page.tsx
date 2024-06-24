@@ -1,7 +1,54 @@
-import React from 'react';
+"use client"
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+
 const Page: React.FC = () => {
+    // State to manage form inputs
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [userName, setUserName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [country, setCountry] = useState('');
+
+    // Handle form submission
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const userData = {
+            firstName,
+            lastName,
+            userName,
+            email,
+            password,
+            phoneNumber,
+            country,
+        };
+
+        try {
+            const response = await fetch('https://marce-server.onrender.com/v1/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            });
+
+            if (response.ok) {
+                console.log('User created successfully!');
+                // Handle successful user creation (e.g., redirect to login page or show success message)
+            } else {
+                console.error('Failed to create user');
+                // Handle failure (e.g., show error message)
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            // Handle network or other errors
+        }
+    };
+
     return (
         <section className="">
             <div className="items-center px-5 py-12 lg:px-20">
@@ -14,7 +61,7 @@ const Page: React.FC = () => {
                     </div>
                     <div className="mt-8">
                         <div className="mt-6">
-                            <form action="#" method="POST" className="space-y-6">
+                            <form onSubmit={handleSubmit} className="space-y-6">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div>
                                         <label htmlFor="first-name" className="block text-sm font-medium text-gray-600">First Name</label>
@@ -22,6 +69,8 @@ const Page: React.FC = () => {
                                             id="first-name"
                                             name="first-name"
                                             type="text"
+                                            value={firstName}
+                                            onChange={(e) => setFirstName(e.target.value)}
                                             required
                                             className="block w-full px-5 py-3 text-base text-gray-600 placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                                             placeholder="First Name"
@@ -33,11 +82,26 @@ const Page: React.FC = () => {
                                             id="last-name"
                                             name="last-name"
                                             type="text"
+                                            value={lastName}
+                                            onChange={(e) => setLastName(e.target.value)}
                                             required
                                             className="block w-full px-5 py-3 text-base text-gray-600 placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                                             placeholder="Last Name"
                                         />
                                     </div>
+                                </div>
+                                <div>
+                                    <label htmlFor="user-name" className="block text-sm font-medium text-gray-600">User Name</label>
+                                    <input
+                                        id="user-name"
+                                        name="user-name"
+                                        type="text"
+                                        value={userName}
+                                        onChange={(e) => setUserName(e.target.value)}
+                                        required
+                                        className="block w-full px-5 py-3 text-base text-gray-600 placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                                        placeholder="User Name"
+                                    />
                                 </div>
                                 <div>
                                     <label htmlFor="email" className="block text-sm font-medium text-gray-600"> Email address </label>
@@ -46,6 +110,8 @@ const Page: React.FC = () => {
                                             id="email"
                                             name="email"
                                             type="email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
                                             autoComplete="email"
                                             required
                                             placeholder="Your Email"
@@ -53,7 +119,6 @@ const Page: React.FC = () => {
                                         />
                                     </div>
                                 </div>
-
                                 <div className="space-y-1">
                                     <label htmlFor="password" className="block text-sm font-medium text-gray-600"> Password </label>
                                     <div className="mt-1">
@@ -61,6 +126,8 @@ const Page: React.FC = () => {
                                             id="password"
                                             name="password"
                                             type="password"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
                                             autoComplete="current-password"
                                             required
                                             placeholder="Your Password"
@@ -68,24 +135,46 @@ const Page: React.FC = () => {
                                         />
                                     </div>
                                 </div>
-
+                                <div>
+                                    <label htmlFor="phone-number" className="block text-sm font-medium text-gray-600">Phone Number</label>
+                                    <input
+                                        id="phone-number"
+                                        name="phone-number"
+                                        type="text"
+                                        value={phoneNumber}
+                                        onChange={(e) => setPhoneNumber(e.target.value)}
+                                        required
+                                        className="block w-full px-5 py-3 text-base text-gray-600 placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                                        placeholder="Phone Number"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="country" className="block text-sm font-medium text-gray-600">Country</label>
+                                    <input
+                                        id="country"
+                                        name="country"
+                                        type="text"
+                                        value={country}
+                                        onChange={(e) => setCountry(e.target.value)}
+                                        required
+                                        className="block w-full px-5 py-3 text-base text-gray-600 placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                                        placeholder="Country"
+                                    />
+                                </div>
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center">
                                         <input
                                             id="remember-me"
                                             name="remember-me"
                                             type="checkbox"
-                                            placeholder="Your password"
                                             className="w-4 h-4 text-gray-600 border-gray-200 rounded focus:ring-gray-500"
                                         />
                                         <label htmlFor="remember-me" className="block ml-2 text-sm text-gray-600"> Remember me </label>
                                     </div>
-
                                     <div className="text-sm">
                                         <a href="#" className="font-medium text-gray-600 hover:text-gray-500"> Forgot your password? </a>
                                     </div>
                                 </div>
-
                                 <div>
                                     <button
                                         type="submit"
@@ -110,7 +199,7 @@ const Page: React.FC = () => {
                             </div>
                             <div>
                                 <button
-                                    type="submit"
+                                    type="button"
                                     className="w-full items-center block px-10 py-3.5 text-base font-medium text-center text-gray-600 transition duration-500 ease-in-out transform border-2 border-white shadow-md rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                                 >
                                     <div className="flex items-center justify-center">
