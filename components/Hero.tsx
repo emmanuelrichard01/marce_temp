@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Transition } from "@headlessui/react";
 
 export default function Hero() {
-    const INTERVAL_LENGTH = 4000;
+    const INTERVAL_LENGTH = 3000;
     const AUTOPLAY = true;
 
     const items = [
@@ -14,10 +14,7 @@ export default function Hero() {
         { src: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png", alt: "Phone Mockup" },
         { src: "/images/macbook.png", alt: "MacBook Mockup" },
         { src: "/images/watch1.png", alt: "Watch Mockup" },
-        { src: "/images/shoe1.png", alt: "Shoe Mockup" },
-        { src: "/images/perfume.png", alt: "Perfume Mockup" },
-        { src: "/images/watch2.png", alt: "Watch Mockup" },
-        { src: "/images/shirt1.png", alt: "Shirt Mockup" }
+        { src: "/images/shoe1.png", alt: "Shoe Mockup" }
     ];
 
     const [currentItem, setCurrentItem] = useState(0);
@@ -44,17 +41,9 @@ export default function Hero() {
                     <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
                         Discover unique products or turn your passions into profit.
                     </p>
-                    <div>
-                        <Link href="#" className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-900">
-                            Join Now
-                            <svg className="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
-                            </svg>
-                        </Link>
-                    </div>
                 </div>
 
-                <div className="relative h-[50vh] sm:h-[60vh] md:h-[70vh] w-full overflow-hidden text-center sm:mt-6 md:mt-6 lg:mt-0 lg:col-span-5 lg:flex">
+                <div className="relative h-[20vh] sm:h-[30vh] md:h-[50vh] w-full overflow-hidden text-center sm:mt-6 md:mt-6 lg:mt-0 lg:col-span-5 lg:flex">
                     {items.map((item, index) => (
                         <Transition
                             key={index}
