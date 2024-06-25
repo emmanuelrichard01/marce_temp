@@ -1,5 +1,6 @@
 import React from "react";
 import logoImg from "@/public/logo.png";
+import logoLightImg from "@/images/logo-light.svg";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -11,6 +12,7 @@ export interface LogoProps {
 
 const Logo: React.FC<LogoProps> = ({
   img = logoImg,
+  imgLight = logoLightImg,
   className = "flex-shrink-0",
 }) => {
   return (
@@ -22,7 +24,7 @@ const Logo: React.FC<LogoProps> = ({
       {/* PLEASE UN COMMENT BELLOW CODE AND USE IT */}
       {img ? (
         <Image
-          className={`block h-8 sm:h-8 w-auto ${img ? "dark:hidden" : ""
+          className={`block h-8 sm:h-8 w-auto ${imgLight ? "dark:hidden" : ""
             }`}
           src={img}
           alt="Logo"
@@ -32,10 +34,10 @@ const Logo: React.FC<LogoProps> = ({
       ) : (
         "Logo Here"
       )}
-      {img && (
+      {imgLight && (
         <Image
           className="hidden h-8 sm:h-10 w-auto dark:block"
-          src={img}
+          src={imgLight}
           alt="Logo-Light"
           sizes="200px"
           priority
