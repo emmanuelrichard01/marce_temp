@@ -12,7 +12,7 @@ const SectionPromo1: FC<SectionPromo1Props> = ({ className = "" }) => {
             className={`nc-SectionPromo1 relative flex flex-col lg:flex-row items-center p-12 ${className}`}
         >
             <div className="relative flex-shrink-0 mb-16 lg:mb-0 lg:mr-10 lg:w-2/5">
-                <Image src="/logo.png" alt='marcelogo' width={60} height={20} />
+                <Image src="/logo.png" alt='marcelogo' width={80} height={40} />
                 <h2 className="font-semibold text-3xl sm:text-4xl xl:text-5xl 2xl:text-6xl mt-6 sm:mt-10 !leading-[1.2] tracking-tight">
                     Start earning more<br /> with Marce
                 </h2>
@@ -29,7 +29,7 @@ const SectionPromo1: FC<SectionPromo1Props> = ({ className = "" }) => {
                 <Image
                     src={rightImgDemo}
                     alt="rid"
-                    width={80} height={30}
+                    width={180} height={90}
                 />
             </div>
         </section>
