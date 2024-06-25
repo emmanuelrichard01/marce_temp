@@ -1,11 +1,7 @@
 import React, { FC } from "react";
-import NcImage from "@/shared/NcImage/NcImage";
 import rightImgDemo from "@/images/rightLargeImg.png";
-import rightLargeImgDark from "@/images/rightLargeImgDark.png";
-import ButtonPrimary from "@/shared/Button/ButtonPrimary";
-import Logo from "@/shared/Logo/Logo";
-import ButtonSecondary from "@/shared/Button/ButtonSecondary";
-
+import Image from "next/image";
+import { Button } from "./ui/button";
 export interface SectionPromo1Props {
     className?: string;
 }
@@ -16,7 +12,7 @@ const SectionPromo1: FC<SectionPromo1Props> = ({ className = "" }) => {
             className={`nc-SectionPromo1 relative flex flex-col lg:flex-row items-center p-12 ${className}`}
         >
             <div className="relative flex-shrink-0 mb-16 lg:mb-0 lg:mr-10 lg:w-2/5">
-                <Logo className="w-2/5" />
+                <Image src="/logo.png" alt='marcelogo' width={60} height={20} />
                 <h2 className="font-semibold text-3xl sm:text-4xl xl:text-5xl 2xl:text-6xl mt-6 sm:mt-10 !leading-[1.2] tracking-tight">
                     Start earning more<br /> with Marce
                 </h2>
@@ -24,25 +20,16 @@ const SectionPromo1: FC<SectionPromo1Props> = ({ className = "" }) => {
                     With Marce you can become a seller & earn...
                 </span>
                 <div className="flex space-x-2 sm:space-x-5 mt-6 sm:mt-12">
-                    <ButtonPrimary href="/" className="">
+                    <Button>
                         Become a Seller
-                    </ButtonPrimary>
+                    </Button>
                 </div>
             </div>
             <div className="relative flex-1 max-w-xl lg:max-w-none p-16">
-                <NcImage
-                    alt=""
-                    containerClassName="block dark:hidden"
+                <Image
                     src={rightImgDemo}
-                    sizes="(max-width: 768px) 80vw, 30vw"
-                    className=""
-                />
-                <NcImage
-                    alt=""
-                    containerClassName="hidden dark:block"
-                    src={rightLargeImgDark}
-                    sizes="(max-width: 768px) 80vw, 30vw"
-                    className=""
+                    alt="rid"
+                    width={80} height={30}
                 />
             </div>
         </section>
