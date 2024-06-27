@@ -12,6 +12,7 @@ import SecurityAndTrust from '../components/SecurityAndTrust';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import SectionPromo1 from "@/components/SectionPromo1";
+import Products from "@/components/Products"
 
 
 export default function Home() {
@@ -21,9 +22,10 @@ export default function Home() {
       <Hero />
       <PopularCategories />
       <FeaturedProducts />
+      <Products />
       {/* <KeyFeatures /> */}
       <SectionPromo1 />
-      <Testimonials />
+      {/* <Testimonials /> */}
       {/* <Benefits /> */}
       <CallToAction />
       {/* <SecurityAndTrust /> */}

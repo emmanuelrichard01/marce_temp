@@ -74,11 +74,11 @@
     @apply bg-background text-foreground;
   }
 }
-/* .slick-track {
-  transform: translate3d(-680px, 0px, 0px);
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
-@media (min-width: 1024px) {
-  .slick-track {
-    transform: translate3d(-1185px, 0px, 0px) !important;
-  }
-} */
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

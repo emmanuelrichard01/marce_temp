@@ -42,7 +42,7 @@ export default function Hero() {
                     </p>
                 </div>
 
-                <div className="relative h-[20vh] sm:h-[30vh] md:h-[50vh] w-full overflow-hidden text-center sm:mt-6 md:mt-6 lg:mt-0 lg:col-span-5 lg:flex">
+                <div className="hidden relative h-[20vh] sm:h-[30vh] md:h-[50vh] w-full overflow-hidden text-center sm:mt-6 md:mt-6 lg:mt-0 lg:col-span-5 lg:flex">
                     {items.map((item, index) => (
                         <Transition
                             key={index}
