@@ -24,8 +24,8 @@ const SectionPromo1: FC<SectionPromo1Props> = ({ className = "" }) => {
                     </Button>
                 </div>
             </div>
-            <div className="sm:hidden relative flex-1 max-w-xl lg:max-w-none p-16">
-                <Image src="/public/undraw.svg" alt="earn more" width={100} height={80} />
+            <div className="relative flex-1 max-w-xl lg:max-w-none p-16">
+                <Image src="/undraw.svg" alt="earn more" width={850} height={800} />
             </div>
         </section>
     );

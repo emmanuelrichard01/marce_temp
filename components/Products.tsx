@@ -27,11 +27,17 @@ const products: Product[] = [
 
 export default function Products() {
     return (
-        <div className="flex overflow-x-auto no-scrollbar space-x-4 p-4">
-            {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-            ))}
-        </div>
+
+        <section className="bg-white py-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 className="text-4xl font-bold text-gray-900 mb-8">Featured Products</h2>
+                <div className="flex overflow-x-auto no-scrollbar space-x-4 p-4">
+                    {products.map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                    ))}
+                </div>
+            </div>
+        </section>
     );
 }
 
