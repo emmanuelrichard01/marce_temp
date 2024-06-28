@@ -4,7 +4,7 @@ import Head from 'next/head';
 import KeyFeatures from '../components/KeyFeatures';
 import FeaturedProducts from "@/components/FeaturedProducts";
 import HowItWorks from '../components/HowItWorks';
-import Testimonials from '../components/Testimonials';
+import Sellers from '../components/Sellers';
 import Benefits from '../components/Benefits';
 import PopularCategories from '../components/PopularCategories';
 import CallToAction from '../components/CallToAction';
@@ -21,11 +21,11 @@ export default function Home() {
     <>
       <Hero />
       <PopularCategories />
-      <FeaturedProducts />
+      {/* <FeaturedProducts /> */}
       <Products />
       {/* <KeyFeatures /> */}
       <SectionPromo1 />
-      {/* <Testimonials /> */}
+      <Sellers />
       {/* <Benefits /> */}
       <CallToAction />
       {/* <SecurityAndTrust /> */}

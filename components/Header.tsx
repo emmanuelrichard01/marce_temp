@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import PopularCategories from './PopularCategories';
 
 const Header: React.FC = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -76,7 +77,7 @@ const Header: React.FC = () => {
                         tabIndex={0}
                     >
                         <button className="flex flex-row items-center w-full px-4 py-2 text-sm text-left text-gray-500 md:w-auto hover:text-gray-900 focus:outline-none focus:shadow-outline">
-                            <span>Dropdown List</span>
+                            <span>Popular Categories</span>
                             <svg
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
@@ -94,17 +95,17 @@ const Header: React.FC = () => {
                                 <div className="px-2 py-2 bg-white rounded-md shadow">
                                     <Link href="#">
                                         <span className="block px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:outline-none focus:shadow-outline">
-                                            Link #1
+                                            Phones
                                         </span>
                                     </Link>
                                     <Link href="#">
                                         <span className="block px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:outline-none focus:shadow-outline">
-                                            Link #2
+                                            Groceries
                                         </span>
                                     </Link>
                                     <Link href="#">
                                         <span className="block px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:outline-none focus:shadow-outline">
-                                            Link #3
+                                            Wears
                                         </span>
                                     </Link>
                                 </div>
@@ -114,7 +115,7 @@ const Header: React.FC = () => {
 
                     <div className="inline-flex items-center gap-3 lg:ml-auto">
                         <Link href="/sign-up">
-                            <button className="px-6 py-3 text-sm font-medium text-white transition duration-500 ease-in-out transform bg-gray-700 rounded-xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                            <button className="px-4 py-2 text-sm font-medium text-white transition duration-500 ease-in-out transform bg-gray-700 rounded-xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                                 Sign up
                             </button>
                         </Link>
