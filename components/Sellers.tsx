@@ -14,7 +14,7 @@ const testimonials = [
 
 const Sellers: React.FC = () => {
     return (
-        <section className="bg-white dark:bg-gray-900">
+        <section className="bg-white p-12 dark:bg-gray-900">
             <div className="py-8 lg:py-16 mx-auto max-w-screen-xl px-4">
                 <div className="flex justify-between mb-4">
                     <h2 className="text-xl lg:text-3xl font-bold text-gray-900 mb-8">Sellers</h2>

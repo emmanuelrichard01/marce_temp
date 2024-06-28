@@ -52,7 +52,7 @@ const PopularCategories: React.FC = () => {
         ]
     };
     return (
-        <section className="bg-white py-10 my-8">
+        <section className="bg-white p-12 my-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between">
                     <h2 className="text-xl lg:text-3xl font-bold text-gray-900 mb-8">Popular Categories</h2>

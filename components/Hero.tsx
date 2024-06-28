@@ -35,7 +35,7 @@ export default function Hero() {
                         Modern C2C Platform
                     </span>
                     <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
-                        Buy, Sell, Connect
+                        Buy, Sell,<br /> Connect...
                     </h1>
                     <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
                         Discover unique products or turn your passions into profit.

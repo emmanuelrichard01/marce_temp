@@ -32,7 +32,7 @@ export default function Products() {
 
         <section className="bg-white py-12">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between">
+                <div className="flex justify-between px-12">
                     <h2 className="text-xl lg:text-3xl font-bold text-gray-900 mb-8">Featured Products</h2>
                     <Link href="/" className={buttonVariants({ variant: "outline" })}>View More</Link>
                 </div>
