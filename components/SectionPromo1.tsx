@@ -11,7 +11,7 @@ const SectionPromo1: FC<SectionPromo1Props> = ({ className = "" }) => {
         <section
             className={`nc-SectionPromo1 relative flex flex-col bg-slate-100 lg:flex-row items-center p-12 ${className}`}
         >
-            <div className="relative flex-shrink-0 mb-16 lg:mb-0 lg:mr-10 lg:w-2/5">
+            <div data-aos="fade-right" className="relative flex-shrink-0 mb-16 lg:mb-0 lg:mr-10 lg:w-2/5">
                 <h2 className="font-bold text-3xl sm:text-4xl xl:text-5xl 2xl:text-6xl mt-6 sm:mt-10 !leading-[1.2] tracking-tight">
                     Start earning more<br /> with Marce
                 </h2>
@@ -24,7 +24,7 @@ const SectionPromo1: FC<SectionPromo1Props> = ({ className = "" }) => {
                     </Button>
                 </div>
             </div>
-            <div className="hidden lg:block relative flex-1 max-w-xl lg:max-w-none p-16">
+            <div data-aos="fade-left" className="hidden lg:block relative flex-1 max-w-xl lg:max-w-none p-16">
                 <Image src="/undraw.svg" alt="earn more" width={850} height={800} />
             </div>
         </section>

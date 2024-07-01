@@ -1,34 +1,31 @@
-import Image from "next/image";
+'use client'
 import Hero from "@/components/Hero";
-import Head from 'next/head';
-import KeyFeatures from '../components/KeyFeatures';
-import FeaturedProducts from "@/components/FeaturedProducts";
-import HowItWorks from '../components/HowItWorks';
 import Sellers from '../components/Sellers';
-import Benefits from '../components/Benefits';
 import PopularCategories from '../components/PopularCategories';
 import CallToAction from '../components/CallToAction';
-import SecurityAndTrust from '../components/SecurityAndTrust';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import SectionPromo1 from "@/components/SectionPromo1";
 import Products from "@/components/Products"
-
+import { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default function Home() {
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: false,
+    });
+  }, []);
   return (
-
     <>
       <Hero />
       <PopularCategories />
-      {/* <FeaturedProducts /> */}
       <Products />
-      {/* <KeyFeatures /> */}
       <SectionPromo1 />
       <Sellers />
-      {/* <Benefits /> */}
       <CallToAction />
-      {/* <SecurityAndTrust /> */}
     </>
 
   );

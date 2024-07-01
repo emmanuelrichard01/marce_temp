@@ -1,15 +1,9 @@
-"use client"
 import React, { useState } from 'react';
-import { buttonVariants } from "@/components/ui/button"
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { JSX, SVGProps } from "react";
-import { SparklesIcon, HandThumbUpIcon as HandThumbUpIconSolid, HeartIcon as HeartIconSolid, ShoppingCartIcon as ShoppingCartIconSolid } from "@heroicons/react/24/solid";
-import { ShoppingCartIcon, HeartIcon, HandThumbUpIcon } from "@heroicons/react/24/outline";
+import { buttonVariants } from "@/components/ui/button";
 import Link from 'next/link';
+import ProductCard from './ProductCard';
 
-// Define the product type
-interface Product {
+export interface Product {
     id: number;
     name: string;
     price: string;
@@ -29,93 +23,37 @@ const products: Product[] = [
 
 export default function Products() {
     return (
-
         <section className="bg-white py-12">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between">
                     <h2 className="text-xl lg:text-3xl font-bold text-gray-900 mb-8">Featured Products</h2>
-                    <Link href="/" className={buttonVariants({ variant: "outline" })}>View More</Link>
+                    <Link href="/productpage" className={buttonVariants({ variant: "outline" })}><p className="mr-4">View More</p>
+                        <span className="animate-right-dir">
+                            <svg
+                                width="17"
+                                height="14"
+                                viewBox="0 0 17 14"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M14.0225 6.00243C13.9998 6.03738 13.9772 6.06941 13.9545 6.10436C13.8724 6.10727 13.7904 6.11601 13.7083 6.11601C9.93521 6.11601 6.16215 6.11601 2.38909 6.11601C1.87111 6.11601 1.35313 6.10728 0.835147 6.12475C0.351131 6.14514 0.00863998 6.51501 0.000148475 6.981C-0.00834303 7.45864 0.3483 7.83725 0.837977 7.8722C0.956858 7.88094 1.07857 7.87511 1.20028 7.87511C5.33565 7.87803 9.46818 7.87803 13.6035 7.88094C13.7253 7.88094 13.8498 7.88094 13.9715 7.88094C14.0026 7.93627 14.031 7.9887 14.0621 8.04403C13.9404 8.12267 13.7988 8.18383 13.697 8.28576C12.3355 9.67499 10.9797 11.0671 9.62669 12.4651C9.26155 12.8437 9.25306 13.3767 9.58423 13.732C9.91823 14.0902 10.4419 14.099 10.8127 13.7233C12.7855 11.702 14.7556 9.6779 16.7199 7.64794C17.0907 7.26351 17.0851 6.73053 16.7171 6.34901C14.7697 4.33652 12.8167 2.32987 10.858 0.329035C10.7278 0.195063 10.5466 0.0873038 10.3683 0.0319679C10.0088 -0.0757916 9.63235 0.116428 9.44554 0.451356C9.26438 0.78046 9.31533 1.20859 9.60687 1.51148C10.6768 2.62111 11.7524 3.72492 12.8308 4.82581C13.2271 5.2219 13.6262 5.60925 14.0225 6.00243Z"
+                                    fill="white"
+                                />
+                                <path
+                                    d="M14.0225 6.00241C13.6262 5.60923 13.2243 5.22188 12.8336 4.82288C11.7552 3.72199 10.6796 2.61818 9.60971 1.50855C9.31816 1.20566 9.26721 0.77753 9.44837 0.448427C9.63518 0.113498 10.0116 -0.0787213 10.3711 0.0290382C10.5466 0.0814617 10.7278 0.192134 10.8608 0.326105C12.8195 2.32694 14.7697 4.33359 16.7199 6.34608C17.0879 6.72469 17.0936 7.26058 16.7228 7.64501C14.7584 9.67497 12.7884 11.6991 10.8155 13.7203C10.4475 14.0989 9.92106 14.0873 9.58706 13.7291C9.25589 13.3737 9.26155 12.8408 9.62952 12.4622C10.9825 11.0642 12.3383 9.67206 13.6998 8.28284C13.8017 8.1809 13.9404 8.11974 14.0649 8.0411C14.0338 7.98577 14.0055 7.93334 13.9743 7.87801C13.8526 7.87801 13.7281 7.87801 13.6064 7.87801C9.47101 7.8751 5.33848 7.8751 1.20311 7.87218C1.0814 7.87218 0.962519 7.87801 0.840808 7.86927C0.3483 7.84015 -0.00834304 7.45862 0.00014847 6.98098C0.00863998 6.515 0.351131 6.14512 0.832316 6.12764C1.3503 6.10726 1.86828 6.11891 2.38626 6.11891C6.16215 6.11599 9.93521 6.11599 13.7083 6.11599C13.7904 6.11599 13.8724 6.10726 13.9574 6.10143C13.9772 6.0694 13.9998 6.03445 14.0225 6.00241Z"
+                                    fill="black"
+                                />
+                            </svg>
+                        </span>
+                    </Link>
                 </div>
-                <div className="flex overflow-x-auto no-scrollbar space-x-4 p-4">
+                <div data-aos="fade-up" className="flex overflow-x-auto no-scrollbar space-x-4 p-4">
                     {products.map((product) => (
                         <ProductCard key={product.id} product={product} />
                     ))}
                 </div>
             </div>
         </section>
-    );
-}
-
-// Define the ProductCard props type
-interface ProductCardProps {
-    product: Product;
-}
-
-function ProductCard({ product }: ProductCardProps) {
-    const [isSparkleVisible, setIsSparkleVisible] = useState(true);
-    const [selectedIcon, setSelectedIcon] = useState('');
-
-    const handleSparkleClick = () => {
-        setIsSparkleVisible(false);
-    };
-
-    const handleIconClick = (icon: string) => {
-        setSelectedIcon(icon);
-        setIsSparkleVisible(true);
-    };
-
-    return (
-        <Card className="w-[220px] lg:w-[270px] flex-shrink-0 hover:shadow-lg">
-            <CardHeader className="relative">
-                <img src={product.imageSrc} alt={product.name} className="h-3/5 w-full object-cover mb-4" />
-                {isSparkleVisible ? (
-                    <Button variant="ghost" size="icon" className="absolute top-2 right-2 rounded-full bg-gray-200" onClick={handleSparkleClick}>
-                        <SparklesIcon className="w-6 h-6" />
-                    </Button>
-                ) : (
-                    <div className="absolute top-2 right-4 flex items-center justify-center bg-gray-50 rounded-3xl shadow-md">
-                        <Button variant="ghost" size="icon" onClick={() => handleIconClick('thumb')}>
-                            {selectedIcon === 'thumb' ? <HandThumbUpIconSolid className="w-5 h-5 mr-1 rounded-full" /> : <HandThumbUpIcon className="w-5 h-5 mr-1 rounded-full" />}
-                        </Button>
-                        <Button variant="ghost" size="icon" onClick={() => handleIconClick('heart')}>
-                            {selectedIcon === 'heart' ? <HeartIconSolid className="w-5 h-5 mr-1 rounded-full" /> : <HeartIcon className="w-5 h-5 mr-1 rounded-full" />}
-                        </Button>
-                        <Button variant="ghost" size="icon" onClick={() => handleIconClick('cart')}>
-                            {selectedIcon === 'cart' ? <ShoppingCartIconSolid className="w-5 h-5 mr-1 rounded-full" /> : <ShoppingCartIcon className="w-5 h-5 mr-1 rounded-full" />}
-                        </Button>
-                    </div>
-                )}
-            </CardHeader>
-            <CardContent>
-                <h3 className="text-lg font-semibold">{product.name}</h3>
-                <div className="flex items-center space-x-2">
-                    <span className="text-xl font-bold">{product.price}</span>
-                    <span className="text-sm line-through text-muted-foreground">$360</span>
-                </div>
-                <div className="flex items-center space-x-1">
-                    <StarIcon className="w-4 h-4 text-yellow-500" />
-                    <StarIcon className="w-4 h-4 text-yellow-500" />
-                    <StarIcon className="w-4 h-4 text-yellow-500" />
-                    <StarIcon className="w-4 h-4 text-yellow-500" />
-                    <StarIcon className="w-4 h-4 text-yellow-500" />
-                    <span className="mr-2 ml-3 rounded bg-gray-300 px-2.5 py-0.5 text-xs font-semibold">5.0</span>
-                </div>
-            </CardContent>
-        </Card>
-    );
-}
-
-function StarIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
-    return (
-        <svg
-            {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-        >
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-        </svg>
     );
 }
