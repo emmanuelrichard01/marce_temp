@@ -5,10 +5,10 @@ import Breadcrumb from '@/components/Breadcrumb';
 import ProductCard from '@/components/ProductCard';
 import { Product } from '@/types/Product';
 import useDebounce from '@/hooks/useDebounce';
-import { Input } from "@/components/ui/input";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from '@/components/ui/button';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 
 const PRODUCTS_PER_PAGE_OPTIONS = [5, 10, 20, 50];
 
@@ -32,7 +32,10 @@ const ProductPage: React.FC = () => {
                 throw new Error('Failed to fetch products');
             }
             const data = await response.json();
-            setProducts(data);
+            setProducts(data.map((product: any) => ({
+                ...product,
+                id: product.id.toString() // Ensure id is always a string
+            })));
         } catch (err) {
             setError('An error occurred while fetching products. Please try again later.');
         } finally {
@@ -57,9 +60,9 @@ const ProductPage: React.FC = () => {
                     case 'name_desc':
                         return b.title.localeCompare(a.title);
                     case 'price_asc':
-                        return parseFloat(a.price) - parseFloat(b.price);
+                        return parseFloat(a.price.toString()) - parseFloat(b.price.toString());
                     case 'price_desc':
-                        return parseFloat(b.price) - parseFloat(a.price);
+                        return parseFloat(b.price.toString()) - parseFloat(a.price.toString());
                     default:
                         return 0;
                 }

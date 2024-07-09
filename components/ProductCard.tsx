@@ -1,12 +1,13 @@
 'use client'
 
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useCallback, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SparklesIcon, HandThumbUpIcon as HandThumbUpIconSolid, HeartIcon as HeartIconSolid, ShoppingCartIcon as ShoppingCartIconSolid } from "@heroicons/react/24/solid";
 import { ShoppingCartIcon, HeartIcon, HandThumbUpIcon } from "@heroicons/react/24/outline";
 import { Product } from '@/types/Product';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface ProductCardProps {
     product: Product;
@@ -16,16 +17,28 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = memo(({ product, onAddToCart, onLike, onFavorite }) => {
-    const [isSparkleVisible, setIsSparkleVisible] = useState(true);
+    const [isInteracting, setIsInteracting] = useState(false);
     const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
+    const cardRef = useRef<HTMLDivElement>(null);
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-    const handleSparkleClick = () => {
-        setIsSparkleVisible(false);
-    };
+    const handleInteractionStart = useCallback(() => {
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        setIsInteracting(true);
+    }, []);
 
-    const handleIconClick = (icon: string) => {
+    const handleInteractionEnd = useCallback(() => {
+        timeoutRef.current = setTimeout(() => setIsInteracting(false), 250);
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        };
+    }, []);
+
+    const handleIconClick = useCallback((icon: string) => {
         setSelectedIcon(prev => prev === icon ? null : icon);
-        setIsSparkleVisible(true);
 
         switch (icon) {
             case 'thumb':
@@ -38,19 +51,31 @@ const ProductCard: React.FC<ProductCardProps> = memo(({ product, onAddToCart, on
                 onAddToCart(product);
                 break;
         }
-    };
+    }, [onLike, onFavorite, onAddToCart, product]);
 
-    const renderIcon = (icon: string, IconOutline: React.ElementType, IconSolid: React.ElementType) => (
-        <Button variant="ghost" size="icon" onClick={() => handleIconClick(icon)}>
+    const renderIcon = useCallback((icon: string, IconOutline: React.ElementType, IconSolid: React.ElementType) => (
+        <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => handleIconClick(icon)}
+            className="p-2 rounded-full bg-white shadow-md"
+        >
             {selectedIcon === icon ?
                 <IconSolid className="w-5 h-5 text-primary" /> :
                 <IconOutline className="w-5 h-5" />
             }
-        </Button>
-    );
+        </motion.button>
+    ), [handleIconClick, selectedIcon]);
 
     return (
-        <Card className="w-full max-w-[270px] flex-shrink-0 transition-shadow duration-300 hover:shadow-lg pt-4 pb-4">
+        <Card
+            ref={cardRef}
+            className="w-full max-w-[270px] flex-shrink-0 transition-shadow duration-300 hover:shadow-lg pt-4 pb-4"
+            onMouseMove={handleInteractionStart}
+            onMouseLeave={handleInteractionEnd}
+            onTouchStart={handleInteractionStart}
+            onTouchEnd={handleInteractionEnd}
+        >
             <CardHeader className="relative p-0">
                 <div className="relative w-full h-48">
                     <Image
@@ -58,33 +83,37 @@ const ProductCard: React.FC<ProductCardProps> = memo(({ product, onAddToCart, on
                         alt={product.title}
                         fill
                         style={{ objectFit: 'contain' }}
-                        quality={100}
-
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        quality={80}
+                        priority={false}
                     />
                 </div>
-                {isSparkleVisible ? (
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        className="absolute top-2 right-3 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors duration-200"
-                        onClick={handleSparkleClick}
-                    >
-                        <SparklesIcon className="w-5 h-5" />
-                    </Button>
-                ) : (
-                    <div className="absolute top-2 right-2 flex items-center justify-center bg-gray-50 rounded-3xl shadow-md">
-                        {renderIcon('thumb', HandThumbUpIcon, HandThumbUpIconSolid)}
-                        {renderIcon('heart', HeartIcon, HeartIconSolid)}
-                        {renderIcon('cart', ShoppingCartIcon, ShoppingCartIconSolid)}
-                    </div>
-                )}
+                <AnimatePresence>
+                    {isInteracting && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.2 }}
+                            className="absolute top-2 right-2 flex items-center space-x-2 bg-gray-50 rounded-3xl shadow-md p-1"
+                        >
+                            {renderIcon('thumb', HandThumbUpIcon, HandThumbUpIconSolid)}
+                            {renderIcon('heart', HeartIcon, HeartIconSolid)}
+                            {renderIcon('cart', ShoppingCartIcon, ShoppingCartIconSolid)}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </CardHeader>
             <CardContent className="p-4">
                 <h3 className="text-lg font-semibold line-clamp-2">{product.title}</h3>
                 <div className="flex items-center space-x-2 mt-2">
-                    <span className="text-xl font-bold text-primary">${product.price}</span>
+                    <span className="text-xl font-bold text-primary">
+                        ${typeof product.price === 'number' ? product.price.toFixed(2) : product.price}
+                    </span>
                     {product.originalPrice && (
-                        <span className="text-sm line-through text-muted-foreground">{product.originalPrice}</span>
+                        <span className="text-sm line-through text-muted-foreground">
+                            ${typeof product.originalPrice === 'number' ? product.originalPrice.toFixed(2) : product.originalPrice}
+                        </span>
                     )}
                 </div>
                 <div className="flex items-center space-x-1 mt-2">
