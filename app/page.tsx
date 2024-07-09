@@ -6,7 +6,7 @@ import CallToAction from '../components/CallToAction';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import SectionPromo1 from "@/components/SectionPromo1";
-import Products from "@/components/Products"
+import FeaturedProducts from "@/components/FeaturedProducts"
 import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -22,7 +22,7 @@ export default function Home() {
     <>
       <Hero />
       <PopularCategories />
-      <Products />
+      <FeaturedProducts />
       <SectionPromo1 />
       <Sellers />
       <CallToAction />

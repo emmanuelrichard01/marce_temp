@@ -1,126 +1,198 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import PopularCategories from './PopularCategories';
+import { useRouter } from 'next/navigation';
+import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react'
+import { MagnifyingGlassIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import useDebounce from '@/hooks/useDebounce';
+
+const Categories = [
+    { name: 'Phones', href: '/category/phones' },
+    { name: 'Groceries', href: '/category/groceries' },
+    { name: 'Wears', href: '/category/wears' },
+];
 
 const Header: React.FC = () => {
-    const [menuOpen, setMenuOpen] = useState(false);
-    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
+    const debouncedSearchTerm = useDebounce(searchTerm, 300);
+    const router = useRouter();
+
+    const handleSearch = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (debouncedSearchTerm.trim()) {
+            router.push(`/search?q=${encodeURIComponent(debouncedSearchTerm.trim())}`);
+        }
+    }, [debouncedSearchTerm, router]);
 
     return (
         <header className="w-full bg-white sticky top-0 z-50 shadow-md">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between max-w-screen-xl mx-auto p-5 md:px-6 lg:px-8">
-                <div className="flex justify-between items-center">
-                    <Link href="/" className='mr-4'>
-                        <Image src="/logo.png" alt="logo" width={140} height={40} />
-                    </Link>
-                    <button
-                        className="md:hidden focus:outline-none"
-                        onClick={() => setMenuOpen(!menuOpen)}
-                    >
-                        <svg fill="currentColor" viewBox="0 0 20 20" className="w-8 h-8">
-                            {menuOpen ? (
-                                <path
-                                    fillRule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clipRule="evenodd"
-                                />
-                            ) : (
-                                <path
-                                    fillRule="evenodd"
-                                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z"
-                                    clipRule="evenodd"
-                                />
-                            )}
-                        </svg>
-                    </button>
-                </div>
-
-                <nav
-                    className={`flex-col mt-4 md:mt-0 md:flex md:flex-row md:items-center md:justify-end w-full md:w-auto ${menuOpen ? 'flex' : 'hidden'}`}
-                >
-                    <div className="relative mx-auto text-gray-600 lg:block">
-                        <input
-                            className="border-2 border-gray-300 bg-white h-10 pl-2 pr-8 rounded-lg text-sm focus:outline-none"
-                            type="search"
-                            name="search"
-                            placeholder="Search"
-                        />
-                        <button type="submit" className="absolute right-0 top-0 mt-3 mr-2">
-                            <svg
-                                className="text-gray-600 h-4 w-4 fill-current"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 56.966 56.966"
-                                width="512px"
-                                height="512px"
-                            >
-                                <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
-                            </svg>
-                        </button>
-                    </div>
-                    <Link href="#" className='mb-4 sm:mb-0'>
-                        <span className="px-4 py-2 text-sm text-gray-500 md:mt-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">
-                            About
-                        </span>
-                    </Link>
-                    <Link href="#" className='mb-4 sm:mb-0'>
-                        <span className="px-4 py-2 text-sm text-gray-500 md:mt-0 hover:text-gray-900 focus:outline-none focus:shadow-outline">
-                            Contact
-                        </span>
-                    </Link>
-                    <div
-                        className="relative mb-4 sm:mb-0"
-                        onClick={() => setDropdownOpen(!dropdownOpen)}
-                        onBlur={() => setDropdownOpen(false)}
-                        tabIndex={0}
-                    >
-                        <button className="flex flex-row items-center w-full px-4 py-2 text-sm text-left text-gray-500 md:w-auto hover:text-gray-900 focus:outline-none focus:shadow-outline">
-                            <span>Popular Categories</span>
-                            <svg
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                className={`inline w-4 h-4 ml-1 transition-transform duration-200 transform ${dropdownOpen ? 'rotate-180' : 'rotate-0'}`}
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                    clipRule="evenodd"
-                                />
-                            </svg>
-                        </button>
-                        {dropdownOpen && (
-                            <div className="absolute right-0 z-30 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48">
-                                <div className="px-2 py-2 bg-white rounded-md shadow">
-                                    <Link href="#">
-                                        <span className="block px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:outline-none focus:shadow-outline">
-                                            Phones
-                                        </span>
-                                    </Link>
-                                    <Link href="#">
-                                        <span className="block px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:outline-none focus:shadow-outline">
-                                            Groceries
-                                        </span>
-                                    </Link>
-                                    <Link href="#">
-                                        <span className="block px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:outline-none focus:shadow-outline">
-                                            Wears
-                                        </span>
-                                    </Link>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-
-                    <div className="inline-flex items-center gap-3 lg:ml-auto">
-                        <Link href="/sign-up">
-                            <button className="px-4 py-2 text-sm font-medium text-white transition duration-500 ease-in-out transform bg-gray-700 rounded-xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                                Sign up
-                            </button>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-row-reverse xl:flex-row sm:flex-row md:flex-row lg:flex-row justify-between items-center py-6 pl-0 pr-5 md:justify-start md:space-x-10">
+                    <div className="flex justify-start lg:w-0 lg:flex-1">
+                        <Link href="/">
+                            <Image src="/logo.png" alt="Marce-Logo" width={140} height={40} priority />
                         </Link>
                     </div>
-                </nav>
+                    <div className="mr-3 -my-2 md:hidden">
+                        <Popover className="relative">
+                            {({ open }) => (
+                                <>
+                                    <PopoverButton className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500">
+                                        <span className="sr-only">Open menu</span>
+                                        {open ? (
+                                            <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                                        ) : (
+                                            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                                        )}
+                                    </PopoverButton>
+                                    <Transition
+                                        show={open}
+                                        enter="duration-200 ease-out"
+                                        enterFrom="opacity-0 scale-95"
+                                        enterTo="opacity-100 scale-100"
+                                        leave="duration-100 ease-in"
+                                        leaveFrom="opacity-100 scale-100"
+                                        leaveTo="opacity-0 scale-95"
+                                    >
+                                        <PopoverPanel
+                                            focus
+                                            className="absolute top-0 inset-x-0 p-2 w-[60vw] transition transform origin-top md:hidden"
+                                        >
+                                            <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
+                                                <div className="pt-5 pb-6 px-5">
+                                                    <div className="flex items-center justify-between">
+                                                        {/* <div>
+                                                            <Image src="/logo.png" alt="Marce-Logo" width={140} height={40} />
+                                                        </div> */}
+                                                        <div className="-mr-2">
+                                                            <PopoverButton className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500">
+                                                                <span className="sr-only">Close menu</span>
+                                                                <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                                                            </PopoverButton>
+                                                        </div>
+                                                    </div>
+                                                    <div className="mt-6">
+                                                        <nav className="grid gap-y-8">
+                                                            {Categories.map((item) => (
+                                                                <Link
+                                                                    key={item.name}
+                                                                    href={item.href}
+                                                                    className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
+                                                                >
+                                                                    <span className="ml-3 text-base font-medium text-gray-900">
+                                                                        {item.name}
+                                                                    </span>
+                                                                </Link>
+                                                            ))}
+                                                        </nav>
+                                                    </div>
+                                                </div>
+                                                <div className="py-6 px-5 space-y-6 mr-4 ml-4">
+                                                    <div className="grid grid-cols-2 gap-y-4 gap-x-8">
+                                                        <Link href="/about" className="text-base font-medium text-gray-900 hover:text-gray-700">
+                                                            About
+                                                        </Link>
+                                                        <Link href="/contact" className="text-base font-medium text-gray-900 hover:text-gray-700">
+                                                            Contact
+                                                        </Link>
+                                                    </div>
+                                                    <div>
+                                                        <Link
+                                                            href="/sign-up"
+                                                            className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-gray-700 hover:bg-gray-900"
+                                                        >
+                                                            Sign up
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </PopoverPanel>
+                                    </Transition>
+                                </>
+                            )}
+                        </Popover>
+                    </div>
+                    <nav className="hidden md:flex space-x-10 items-center">
+                        <form onSubmit={handleSearch} className="relative flex-grow max-w-md">
+                            <input
+                                type="search"
+                                placeholder="Search..."
+                                className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-800"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                            <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
+                        </form>
+                        <Link href="/about" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                            About
+                        </Link>
+                        <Link href="/contact" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                            Contact
+                        </Link>
+                        <Popover className="relative">
+                            {({ open }) => (
+                                <>
+                                    <PopoverButton
+                                        className={`${open ? 'text-gray-900' : 'text-gray-500'} group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600`}
+                                    >
+                                        <span>Categories</span>
+                                        <svg
+                                            className={`${open ? 'text-gray-600' : 'text-gray-400'} ml-2 h-5 w-5 group-hover:text-gray-500`}
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                            aria-hidden="true"
+                                        >
+                                            <path
+                                                fillRule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clipRule="evenodd"
+                                            />
+                                        </svg>
+                                    </PopoverButton>
+
+                                    <Transition
+                                        show={open}
+                                        enter="transition ease-out duration-200"
+                                        enterFrom="opacity-0 translate-y-1"
+                                        enterTo="opacity-100 translate-y-0"
+                                        leave="transition ease-in duration-150"
+                                        leaveFrom="opacity-100 translate-y-0"
+                                        leaveTo="opacity-0 translate-y-1"
+                                    >
+                                        <PopoverPanel className="absolute z-10 -ml-4 mt-3 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
+                                            <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
+                                                <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                                                    {Categories.map((item) => (
+                                                        <Link
+                                                            key={item.name}
+                                                            href={item.href}
+                                                            className="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50"
+                                                        >
+                                                            <div className="ml-4">
+                                                                <p className="text-base font-medium text-gray-900">{item.name}</p>
+                                                            </div>
+                                                        </Link>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </PopoverPanel>
+                                    </Transition>
+                                </>
+                            )}
+                        </Popover>
+                    </nav>
+                    <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+                        <Link
+                            href="/sign-up"
+                            className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-gray-700 hover:bg-gray-900"
+                        >
+                            Sign up
+                        </Link>
+                    </div>
+                </div>
             </div>
         </header>
     );

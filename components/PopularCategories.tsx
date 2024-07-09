@@ -55,7 +55,7 @@ const PopularCategories: React.FC = () => {
         <section className="bg-white py-10 my-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between">
-                    <h2 className="text-xl lg:text-3xl font-bold text-gray-900 mb-8">Popular Categories</h2>
+                    <h2 className="text-base lg:text-3xl font-bold text-gray-900 mb-8">Popular Categories</h2>
                     <Link href="/" className={buttonVariants({ variant: "outline" })}><p className="mr-4">View More</p>
                         <span className="animate-right-dir">
                             <svg
@@ -81,8 +81,8 @@ const PopularCategories: React.FC = () => {
                     <Slider {...settings}>
                         {categories.map((category) => (
                             <div key={category.name} className=" !flex flex-col items-center bg-white p-6 rounded-lg">
-                                <div className="p-4 h-20 w-20 bg-gray-200 rounded-full justify-center flex">
-                                    <category.icon className="h-12 w-12 text-gray-800 mb-4 items-center" />
+                                <div className="p-4 h-15 w-15 bg-gray-200 rounded-full justify-center flex">
+                                    <category.icon className="h-8 w-8 text-gray-800 items-center" />
                                 </div>
                                 <h3 className="text-sm font-semibold text-gray-900">{category.name}</h3>
                             </div>

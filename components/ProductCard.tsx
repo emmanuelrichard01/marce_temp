@@ -1,82 +1,137 @@
 'use client'
-import React, { useState } from 'react';
+
+import React, { useState, memo } from 'react';
+import Image from 'next/image';
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SparklesIcon, HandThumbUpIcon as HandThumbUpIconSolid, HeartIcon as HeartIconSolid, ShoppingCartIcon as ShoppingCartIconSolid } from "@heroicons/react/24/solid";
 import { ShoppingCartIcon, HeartIcon, HandThumbUpIcon } from "@heroicons/react/24/outline";
-import { Product } from '@/components/Products';
+import { Product } from '@/types/Product';
 
 interface ProductCardProps {
     product: Product;
+    onAddToCart: (product: Product) => void;
+    onLike: (product: Product) => void;
+    onFavorite: (product: Product) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = memo(({ product, onAddToCart, onLike, onFavorite }) => {
     const [isSparkleVisible, setIsSparkleVisible] = useState(true);
-    const [selectedIcon, setSelectedIcon] = useState('');
+    const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
 
     const handleSparkleClick = () => {
         setIsSparkleVisible(false);
     };
 
     const handleIconClick = (icon: string) => {
-        setSelectedIcon(icon);
+        setSelectedIcon(prev => prev === icon ? null : icon);
         setIsSparkleVisible(true);
+
+        switch (icon) {
+            case 'thumb':
+                onLike(product);
+                break;
+            case 'heart':
+                onFavorite(product);
+                break;
+            case 'cart':
+                onAddToCart(product);
+                break;
+        }
     };
 
+    const renderIcon = (icon: string, IconOutline: React.ElementType, IconSolid: React.ElementType) => (
+        <Button variant="ghost" size="icon" onClick={() => handleIconClick(icon)}>
+            {selectedIcon === icon ?
+                <IconSolid className="w-5 h-5 text-primary" /> :
+                <IconOutline className="w-5 h-5" />
+            }
+        </Button>
+    );
+
     return (
-        <Card className="w-[220px] lg:w-[270px] flex-shrink-0 hover:shadow-lg">
-            <CardHeader className="relative">
-                <img src={product.imageSrc} alt={product.name} className="h-3/5 w-full object-cover mb-4" />
+        <Card className="w-full max-w-[270px] flex-shrink-0 transition-shadow duration-300 hover:shadow-lg pt-4 pb-4">
+            <CardHeader className="relative p-0">
+                <div className="relative w-full h-48">
+                    <Image
+                        src={product.image}
+                        alt={product.title}
+                        fill
+                        style={{ objectFit: 'contain' }}
+                        quality={100}
+
+                    />
+                </div>
                 {isSparkleVisible ? (
-                    <Button variant="ghost" size="icon" className="absolute top-2 right-2 rounded-full bg-gray-200" onClick={handleSparkleClick}>
-                        <SparklesIcon className="w-6 h-6" />
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="absolute top-2 right-3 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors duration-200"
+                        onClick={handleSparkleClick}
+                    >
+                        <SparklesIcon className="w-5 h-5" />
                     </Button>
                 ) : (
-                    <div className="absolute top-2 right-4 flex items-center justify-center bg-gray-50 rounded-3xl shadow-md">
-                        <Button variant="ghost" size="icon" onClick={() => handleIconClick('thumb')}>
-                            {selectedIcon === 'thumb' ? <HandThumbUpIconSolid className="w-5 h-5 mr-1 rounded-full" /> : <HandThumbUpIcon className="w-5 h-5 mr-1 rounded-full" />}
-                        </Button>
-                        <Button variant="ghost" size="icon" onClick={() => handleIconClick('heart')}>
-                            {selectedIcon === 'heart' ? <HeartIconSolid className="w-5 h-5 mr-1 rounded-full" /> : <HeartIcon className="w-5 h-5 mr-1 rounded-full" />}
-                        </Button>
-                        <Button variant="ghost" size="icon" onClick={() => handleIconClick('cart')}>
-                            {selectedIcon === 'cart' ? <ShoppingCartIconSolid className="w-5 h-5 mr-1 rounded-full" /> : <ShoppingCartIcon className="w-5 h-5 mr-1 rounded-full" />}
-                        </Button>
+                    <div className="absolute top-2 right-2 flex items-center justify-center bg-gray-50 rounded-3xl shadow-md">
+                        {renderIcon('thumb', HandThumbUpIcon, HandThumbUpIconSolid)}
+                        {renderIcon('heart', HeartIcon, HeartIconSolid)}
+                        {renderIcon('cart', ShoppingCartIcon, ShoppingCartIconSolid)}
                     </div>
                 )}
             </CardHeader>
-            <CardContent>
-                <h3 className="text-lg font-semibold">{product.name}</h3>
-                <div className="flex items-center space-x-2">
-                    <span className="text-xl font-bold">{product.price}</span>
-                    <span className="text-sm line-through text-muted-foreground">$360</span>
+            <CardContent className="p-4">
+                <h3 className="text-lg font-semibold line-clamp-2">{product.title}</h3>
+                <div className="flex items-center space-x-2 mt-2">
+                    <span className="text-xl font-bold text-primary">${product.price}</span>
+                    {product.originalPrice && (
+                        <span className="text-sm line-through text-muted-foreground">{product.originalPrice}</span>
+                    )}
                 </div>
-                <div className="flex items-center space-x-1">
-                    <StarIcon className="w-4 h-4 text-yellow-500" />
-                    <StarIcon className="w-4 h-4 text-yellow-500" />
-                    <StarIcon className="w-4 h-4 text-yellow-500" />
-                    <StarIcon className="w-4 h-4 text-yellow-500" />
-                    <StarIcon className="w-4 h-4 text-yellow-500" />
-                    <span className="mr-2 ml-3 rounded bg-gray-300 px-2.5 py-0.5 text-xs font-semibold">5.0</span>
+                <div className="flex items-center space-x-1 mt-2">
+                    <StarRating rating={product.rating ?? 0} />
+                    <span className="ml-2 rounded bg-gray-200 px-2.5 py-0.5 text-xs font-semibold">
+                        {typeof product.rating === 'number' ? product.rating.toFixed(1) : 'N/A'}
+                    </span>
                 </div>
             </CardContent>
         </Card>
     );
+});
+
+ProductCard.displayName = 'ProductCard';
+
+interface StarRatingProps {
+    rating: number;
 }
 
-function StarIcon(props: JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) {
+const StarRating: React.FC<StarRatingProps> = memo(({ rating }) => {
+    return (
+        <>
+            {[1, 2, 3, 4, 5].map((star) => (
+                <StarIcon
+                    key={star}
+                    className={`w-4 h-4 ${star <= rating ? 'text-yellow-500' : 'text-gray-300'}`}
+                />
+            ))}
+        </>
+    );
+});
+
+StarRating.displayName = 'StarRating';
+
+const StarIcon: React.FC<React.SVGProps<SVGSVGElement>> = memo((props) => {
     return (
         <svg
             {...props}
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
             viewBox="0 0 24 24"
             fill="currentColor"
         >
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clipRule="evenodd" />
         </svg>
     );
-}
+});
+
+StarIcon.displayName = 'StarIcon';
 
 export default ProductCard;

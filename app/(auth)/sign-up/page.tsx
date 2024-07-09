@@ -1,7 +1,6 @@
 "use client"
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 const Page: React.FC = () => {
     // State to manage form inputs
@@ -54,9 +53,6 @@ const Page: React.FC = () => {
             <div className="items-center px-5 py-12 lg:px-20">
                 <div className="flex flex-col w-full max-w-md p-10 mx-auto my-6 transition duration-500 ease-in-out transform bg-white rounded-lg md:mt-0">
                     <div>
-                        <Link className="text-gray-600 text-medium" href="/">
-                            <Image src="/logo.png" alt='marcelogo' width={180} height={40} />
-                        </Link>
                         <h2 className="mt-6 text-3xl font-extrabold text-gray-600">Sign Up.</h2>
                     </div>
                     <div className="mt-8">

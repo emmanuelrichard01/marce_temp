@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import rightImgDemo from "@/images/rightLargeImg.png";
 import Image from "next/image";
 import { Button } from "./ui/button";
 export interface SectionPromo1Props {
@@ -11,9 +10,9 @@ const SectionPromo1: FC<SectionPromo1Props> = ({ className = "" }) => {
         <section
             className={`nc-SectionPromo1 relative flex flex-col bg-slate-100 lg:flex-row items-center p-12 ${className}`}
         >
-            <div data-aos="fade-right" className="relative flex-shrink-0 mb-16 lg:mb-0 lg:mr-10 lg:w-2/5">
-                <h2 className="font-bold text-3xl sm:text-4xl xl:text-5xl 2xl:text-6xl mt-6 sm:mt-10 !leading-[1.2] tracking-tight">
-                    Start earning more<br /> with Marce
+            <div data-aos="fade-right" className="relative flex-shrink-0 mb-6 lg:mb-0 lg:mr-10 lg:w-2/5">
+                <h2 className="font-medium text-3xl sm:text-4xl xl:text-5xl 2xl:text-6xl mt-6 sm:mt-10 !leading-[1.2] tracking-tight">
+                    <span className=" font-bold uppercase">Start earning</span> more<br /> with <span className="font-bold uppercase">Marce</span>
                 </h2>
                 <span className="block mt-6 text-slate-500 dark:text-slate-400 ">
                     With Marce you can become a seller & earn...
@@ -24,7 +23,7 @@ const SectionPromo1: FC<SectionPromo1Props> = ({ className = "" }) => {
                     </Button>
                 </div>
             </div>
-            <div data-aos="fade-left" className="hidden lg:block relative flex-1 max-w-xl lg:max-w-none p-16">
+            <div data-aos="fade-up" className="hidden lg:block relative flex-1 max-w-xl lg:max-w-none p-16">
                 <Image src="/undraw.svg" alt="earn more" width={850} height={800} />
             </div>
         </section>
