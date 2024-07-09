@@ -58,7 +58,7 @@ const Header: React.FC = () => {
                                     >
                                         <PopoverPanel
                                             focus
-                                            className="absolute top-0 inset-x-0 p-2 w-[60vw] transition transform origin-top md:hidden"
+                                            className="absolute top-0 inset-x-0 p-2 w-[70vw] sm:w-[60vw] md:w-[60vw] lg:w-[60vw] xl:w-[50vw] transition transform origin-top md:hidden"
                                         >
                                             <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
                                                 <div className="pt-5 pb-6 px-5">
